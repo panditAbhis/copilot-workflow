@@ -1,0 +1,19 @@
+{
+  "servers": {
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "description": "Fetches current official documentation for any library or framework. Prevents hallucinated APIs and deprecated patterns."
+    },
+    "github": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_PERSONAL_ACCESS_TOKEN}"
+      },
+      "description": "Reads PR diffs, issue context, and repo structure. Enables agents to review real PRs automatically."
+    }
+  }
+}
