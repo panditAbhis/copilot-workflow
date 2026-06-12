@@ -1,0 +1,14 @@
+{
+  "name": "copilot-workflow",
+  "version": "1.0.0",
+  "description": "GitHub Copilot workflow template — replace these scripts with your project's actual commands",
+  "scripts": {
+    "lint": "echo '✓ Replace with your linter (e.g. eslint src --ext .ts)' && exit 0",
+    "test": "echo '✓ Replace with your test runner (e.g. jest --coverage)' && exit 0",
+    "build": "echo '✓ Replace with your build command (e.g. tsc --noEmit)' && exit 0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT"
+}
