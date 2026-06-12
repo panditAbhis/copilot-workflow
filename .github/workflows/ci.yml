@@ -6,6 +6,12 @@ on:
   push:
     branches: [main]
 
+# All steps run via npm run scripts defined in package.json.
+# Replace placeholder scripts with your project's actual commands:
+#   lint  → eslint src --ext .ts
+#   test  → jest --coverage
+#   build → tsc --noEmit && vite build (or whatever your stack uses)
+
 jobs:
   lint:
     name: Lint & Type Check
@@ -19,8 +25,6 @@ jobs:
       - run: npm ci
       - name: Lint
         run: npm run lint
-      - name: Type check
-        run: npx tsc --noEmit
 
   test:
     name: Unit & Integration Tests
@@ -33,7 +37,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - name: Test
-        run: npm test -- --coverage
+        run: npm test
 
   build:
     name: Build
@@ -74,12 +78,6 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const failedJobs = ['lint', 'test', 'build', 'security']
-              .filter(job => '${{ needs.lint.result }}' === 'failure' ||
-                             '${{ needs.test.result }}' === 'failure' ||
-                             '${{ needs.build.result }}' === 'failure' ||
-                             '${{ needs.security.result }}' === 'failure');
-
             const body = `## ❌ CI Failed
 
             One or more CI gates failed on this PR. To fix with Copilot:
