@@ -3,17 +3,17 @@
     "context7": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "args": ["@upstash/context7-mcp@3.2.0"],
       "description": "Fetches current official documentation for any library or framework. Prevents hallucinated APIs and deprecated patterns."
     },
     "github": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "args": ["@modelcontextprotocol/server-github@2025.4.8"],
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_PERSONAL_ACCESS_TOKEN}"
       },
-      "description": "Reads PR diffs, issue context, and repo structure. Enables agents to review real PRs automatically."
+      "description": "Reads PR diffs and repo structure. Use a read-only scoped token (Contents: read, Pull requests: read). Never use a full-access PAT here."
     }
   }
 }
