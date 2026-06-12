@@ -20,11 +20,11 @@ One-time setup. Works in every repo you create from this template. No re-prompti
 |------|-------|---------------------|
 | 1 | [Your Copilot Has No Memory. Here's How I Fixed That in 5 Minutes.](https://dev.to/panditabhis/your-copilot-has-no-memory-heres-how-i-fixed-that-in-5-minutes-34l7) | Setup: copilot-instructions.md + agent personas |
 | 2 | [Stop Merging Blind: How I Use @code-reviewer Before Every PR](https://dev.to/panditabhis/stop-merging-blind-how-i-use-code-reviewer-before-every-pr-2eji) | 5-axis code review, severity labels, what to fix vs. skip |
-| 3 | Never Fix a Bug Without Proof — coming soon | @test-engineer, the Prove-It Pattern, TDD cycle |
-| 4 | Think Like an Attacker — coming soon | @security-auditor, STRIDE, OWASP Top 10 |
-| 5 | One Command to Rule Them All — coming soon | /ship chatmode, pre-merge fan-out, automated verdict |
-| 6 | From Idea to Implementation Plan in One Session — coming soon | @spec-writer, @planner, /spec chatmode |
-| 7 | A Day in the Life — coming soon | Complete 8-step session walkthrough with a real feature |
+| 3 | [Never Fix a Bug Without Proof: The @test-engineer Prove-It Pattern](https://dev.to/panditabhis/never-fix-a-bug-without-proof-the-test-engineer-prove-it-pattern-1cmh) | @test-engineer, the Prove-It Pattern, TDD cycle |
+| 4 | [Think Like an Attacker: How I Use @security-auditor Before Every Production Deploy](https://dev.to/panditabhis/think-like-an-attacker-how-i-use-security-auditor-before-every-production-deploy-5434) | @security-auditor, STRIDE, OWASP Top 10 |
+| 5 | [One Command to Rule Them All: The /ship Chatmode](https://dev.to/panditabhis/one-command-to-rule-them-all-the-ship-chatmode-that-reviews-audits-and-cleans-before-every-merge-5590) | /ship chatmode, pre-merge fan-out, automated verdict |
+| 6 | [Stop Building the Wrong Thing: @spec-writer and @planner](https://dev.to/panditabhis/stop-building-the-wrong-thing-how-i-use-spec-writer-and-planner-before-writing-a-single-line-of-1jd0) | @spec-writer, @planner, /spec chatmode |
+| 7 | [A Day in the Life: Complete Session Walkthrough](https://dev.to/panditabhis/a-day-in-the-life-complete-copilot-workflow-session-from-idea-to-merged-pr-4cdb) | Complete 8-step session walkthrough with a real feature |
 
 ---
 
