@@ -1,8 +1,8 @@
 # copilot-workflow
 
-> How I turned GitHub Copilot into a disciplined pair programmer — not just an autocomplete engine.
+> How I turned GitHub Copilot into a disciplined engineering team — not just a fast autocomplete.
 
-One-time setup. Works in every repo you create from this template. No re-configuration, no repeated prompting.
+One-time setup. Works in every repo you create from this template. No re-prompting, no configuration drift, no forgetting the security pass when you're rushing.
 
 ## Resources
 
@@ -10,191 +10,267 @@ One-time setup. Works in every repo you create from this template. No re-configu
 |---|---|
 | Full series | [dev.to/panditabhis](https://dev.to/panditabhis) |
 | Template | [github.com/panditAbhis/copilot-workflow](https://github.com/panditAbhis/copilot-workflow) |
+| Companion repo | [github.com/panditAbhis/claude-workflow](https://github.com/panditAbhis/claude-workflow) |
 
 ---
 
-## Why this exists
+## Read the Series (in order)
 
-Vanilla Copilot is generic. It doesn't know your testing philosophy, your security rules, or your review standards. Every session you either prompt it into shape or accept mediocre output.
-
-This template fixes that permanently:
-- **`copilot-instructions.md`** — Copilot reads this automatically. Your rules, every session, zero effort.
-- **Agent personas** — Switch Copilot into specialist mode (reviewer, tester, security auditor) with one `@` mention.
-
----
-
-## 5-minute setup
-
-### Prerequisites
-- GitHub Copilot active on your account (Individual, Business, or Enterprise)
-- VS Code with the [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) installed
-- GitHub Copilot Chat extension installed
-
-### Step 1 — Create your repo from this template
-
-1. Click **Use this template** → **Create a new repository**
-2. Name it, set visibility, click **Create repository**
-
-That's it. The `.github/` folder is copied into your new repo and Copilot picks it up immediately.
-
-### Step 2 — Verify Copilot is reading your instructions
-
-Open Copilot Chat in VS Code and ask:
-
-```
-What are the coding standards for this project?
-```
-
-Copilot should describe the testing pyramid, 5-axis review, and security rules. If it does — you're done.
-
-### Step 3 — Use the agents
-
-In Copilot Chat, prefix your message with the agent name:
-
-```
-@code-reviewer Review the changes in auth/middleware.ts
-@test-engineer Write tests for the createUser function
-@security-auditor Audit this file upload handler for vulnerabilities
-```
-
-No installation. No configuration. The `.github/agents/` folder is auto-discovered.
+| Part | Title | What you will learn |
+|------|-------|---------------------|
+| 1 | [Your Copilot Has No Memory. Here's How I Fixed That in 5 Minutes.](https://dev.to/panditabhis/your-copilot-has-no-memory-heres-how-i-fixed-that-in-5-minutes-34l7) | Setup: copilot-instructions.md + agent personas |
+| 2 | [Stop Merging Blind: How I Use @code-reviewer Before Every PR](https://dev.to/panditabhis/stop-merging-blind-how-i-use-code-reviewer-before-every-pr-2eji) | 5-axis code review, severity labels, what to fix vs. skip |
+| 3 | Never Fix a Bug Without Proof — coming soon | @test-engineer, the Prove-It Pattern, TDD cycle |
+| 4 | Think Like an Attacker — coming soon | @security-auditor, STRIDE, OWASP Top 10 |
+| 5 | One Command to Rule Them All — coming soon | /ship chatmode, pre-merge fan-out, automated verdict |
+| 6 | From Idea to Implementation Plan in One Session — coming soon | @spec-writer, @planner, /spec chatmode |
+| 7 | A Day in the Life — coming soon | Complete 8-step session walkthrough with a real feature |
 
 ---
 
-## What's in this repo
+## What is in this repo
 
 ```
 .github/
-  copilot-instructions.md     Your project standards — auto-loaded by Copilot every session
+  copilot-instructions.md     Coding standards — auto-loaded by Copilot every session
   agents/
-    README.md                 How agents compose and when to use each one
-    code-reviewer.md          Staff engineer persona — 5-axis code review
-    test-engineer.md          QA engineer persona — TDD + coverage analysis
-    security-auditor.md       Security engineer persona — OWASP + threat modeling
+    README.md                 When to use which agent and composition rules
+    code-reviewer.md          Staff engineer — 5-axis review before every merge
+    test-engineer.md          QA engineer — TDD, Prove-It pattern, coverage gaps
+    security-auditor.md       Security engineer — OWASP, STRIDE, threat modeling
+    web-performance-auditor.md Perf engineer — Core Web Vitals, LCP, INP, CLS
+    api-designer.md           API architect — contract-first design, REST patterns
+    frontend-engineer.md      Frontend engineer — a11y, WCAG 2.1 AA, no AI aesthetic
+    observability-engineer.md SRE — structured logging, RED metrics, alerting
+    debugger.md               Staff engineer — root cause, not symptoms
+    planner.md                Tech lead — ordered task breakdown, no code
+    spec-writer.md            Engineering lead — spec before code, always
+    simplifier.md             Staff engineer — clarity without behavior change
+    idea-refiner.md           Thinking partner — diverge, converge, one-pager
+    adr-writer.md             Engineering lead — decision records, the why
+    migration-engineer.md     Staff engineer — deprecate safely, Hyrum's Law
+    performance-engineer.md   Perf engineer — backend profiling, N+1, DB indexes
+    source-reader.md          Researcher — official docs, version-pinned, cited
+    doubter.md                Adversarial reviewer — finds issues, never validates
+  chatmodes/
+    ship.chatmode.md          Pre-merge: review + security + simplify → SHIP verdict
+    spec.chatmode.md          New features: idea → spec → tasks → handoff
+    debug.chatmode.md         Bugs: reproduce → root cause → regression test → fix
+  workflows/
+    ci.yml                    Quality gates: lint, typecheck, tests, build, audit
+.vscode/
+  mcp.json                    MCP servers: context7 (live docs) + github (PR context)
+CONTEXT.md                    Project memory — maintain this to keep Copilot on track
 README.md                     You are here
 ```
 
 ---
 
-## The three agents
+## The 17 Agents
 
-### `@code-reviewer` — Staff Engineer
+### Discovery & Planning
 
-Reviews every change across five dimensions: **correctness, readability, architecture, security, performance**.
+| Agent | When to invoke |
+|-------|----------------|
+| `@idea-refiner` | Vague idea → sharp concept with Not-Doing list. Before @spec-writer. |
+| `@spec-writer` | Concept → structured spec with success criteria. Before @planner. |
+| `@planner` | Approved spec → ordered task list with acceptance criteria. No code. |
+| `@adr-writer` | After any significant technical decision — records the why permanently. |
 
-Every finding is labeled — Critical (blocks merge), Important (should fix), Suggestion (optional). You always know what's required vs. what's nice to have.
+### Implementation
 
-**When to use:**
-- Before opening a PR
-- After a large refactor
-- When another AI generated code you need to evaluate
+| Agent | When to invoke |
+|-------|----------------|
+| `@test-engineer` | Write tests first (TDD). Prove-It Pattern for bugs. Coverage analysis. |
+| `@api-designer` | Designing endpoints or module contracts. Contract before implementation. |
+| `@frontend-engineer` | Components, layouts, state. WCAG 2.1 AA enforced. Zero AI aesthetic. |
+| `@source-reader` | Any framework-specific pattern — fetches real docs, pins to version, cites. |
 
-### `@test-engineer` — QA Engineer
+### Review & Quality
 
-Designs test suites, writes tests, and finds coverage gaps. Follows the **Prove-It Pattern** for bugs: write a failing test that reproduces the bug *before* implementing the fix. The test is the proof the bug existed and is now gone.
+| Agent | When to invoke |
+|-------|----------------|
+| `@code-reviewer` | Before every PR. 5-axis: correctness, readability, arch, security, perf. |
+| `@security-auditor` | Auth, input handling, uploads, external APIs. OWASP Top 10 + STRIDE. |
+| `@web-performance-auditor` | Core Web Vitals audit. LCP, INP, CLS. Bundle analysis. |
+| `@simplifier` | Post-feature readability pass. Behavior preserved, complexity removed. |
+| `@doubter` | Adversarial review of non-trivial decisions. Finds issues — never validates. |
 
-**When to use:**
-- Starting a new feature (write tests first)
-- Got a bug report (reproduce it with a test first)
-- Unsure if your test suite covers the right things
+### Operations & Maintenance
 
-### `@security-auditor` — Security Engineer
-
-Starts from trust boundaries, runs STRIDE analysis, maps findings to OWASP Top 10. Only flags **exploitable** vulnerabilities — not theoretical risks. Every finding includes a proof-of-concept and a specific fix.
-
-**When to use:**
-- Any code that handles user input
-- Auth flows, file uploads, webhooks, external API integrations
-- Before shipping anything to production
-
----
-
-## The coding standards (what Copilot knows)
-
-These rules are in `copilot-instructions.md` and apply automatically.
-
-### Testing
-- Write the failing test **before** the implementation — always
-- Bug fix = reproduction test first, then fix
-- Test what the code **does**, not how it does it internally
-- Real implementations over mocks — only mock at true system boundaries (network, database)
-- 80% unit / 15% integration / 5% E2E
-
-### Code quality
-- PR size: ~100 lines ideal, ~300 acceptable, >1000 must be split
-- Refactoring PRs are separate from feature PRs — always
-- No dead code, no backwards-compat shims for things nobody uses
-- Abstractions earn their existence at the **third** use case, not the first
-
-### Security
-- Treat every external input as hostile — validate at the boundary
-- Parameterize all database queries — no string concatenation, ever
-- Never commit secrets — `.env` stays local, `.env.example` gets committed
-- LLM output is untrusted input — never pass to `eval`, SQL, shell, or `innerHTML`
+| Agent | When to invoke |
+|-------|----------------|
+| `@observability-engineer` | Logging, metrics, tracing, alerting — instrument before shipping. |
+| `@performance-engineer` | Backend profiling, N+1 queries, DB indexes. Measure before optimizing. |
+| `@debugger` | Test failures, build errors, unexpected behavior. Root cause first. |
+| `@migration-engineer` | Deprecating old APIs or systems. Hyrum's Law. Safe strangler migration. |
 
 ---
 
-## Adapting this to your project
+## The 3 Chatmodes
 
-### Add language-specific rules
-Append to `copilot-instructions.md`:
+Chatmodes are automated workflows — one command, multiple agents orchestrated in sequence.
 
-```markdown
-## TypeScript
-- Strict mode always on — no `any` without an explicit justification comment
-- Zod for all external input validation
+| Chatmode | Trigger | What it does |
+|----------|---------|--------------|
+| `ship` | Ready to merge | code review + security audit + simplification → single SHIP/NO verdict |
+| `spec` | Starting something new | idea refine → spec → task breakdown, gated at each stage |
+| `debug` | Something broke | reproduce → localize → root cause → regression test → fix |
 
-## Python
-- Type hints on all public functions
-- pytest only — no unittest
+Switch chatmodes from the chatmode selector at the top of VS Code Copilot Chat.
+
+---
+
+## The 8-Step Session Workflow
+
+| Step | What | Why |
+|------|------|-----|
+| 1 | Open `/spec` chatmode for new features | Spec before code — always |
+| 2 | `@spec-writer` writes spec, wait for approval | Surface wrong assumptions before building |
+| 3 | `@planner` breaks spec into tasks | Know the order and scope before writing code |
+| 4 | `@test-engineer` writes failing tests first | Prove what you're building before building it |
+| 5 | Implement to make tests pass | Code with a clear target |
+| 6 | `@simplifier` for readability | Clean before review, not after |
+| 7 | `/ship` chatmode — get SHIP verdict | Code review + security + simplification in one pass |
+| 8 | CI green → merge | Automated quality gate confirms everything |
+
+---
+
+## Quick Reference
+
+```
+@idea-refiner    vague idea → sharp concept
+@spec-writer     concept → structured spec
+@planner         spec → ordered task list
+@test-engineer   TDD, Prove-It pattern, coverage gaps
+@code-reviewer   5-axis review before every PR
+@security-auditor OWASP + STRIDE, exploitable vulns only
+@simplifier      readability pass, behavior unchanged
+@doubter         adversarial review of risky decisions
+@debugger        root cause, not symptom
+
+/ship chatmode   pre-merge: review + security + simplify → verdict
+/spec chatmode   idea → spec → tasks, gated
+/debug chatmode  reproduce → root cause → regression test → fix
 ```
 
-### Add more agents
-Create a new `.md` file in `.github/agents/` with this frontmatter:
+---
+
+## CONTEXT.md — Copilot's Memory
+
+Claude has a persistent memory system. Copilot doesn't — it starts fresh in every session.
+
+The fix: maintain `CONTEXT.md` at your project root. Copilot reads it via `copilot-instructions.md`'s reference. Update it as the project evolves.
 
 ```markdown
----
-name: your-agent-name
-description: One sentence — what this agent does and when to invoke it
----
+# Project Context
 
-# Agent Name
-[Instructions for the agent...]
+## Current sprint
+[What you're building right now]
+
+## Recent decisions
+- [Decision + reason, date]
+- [Decision + reason, date]
+
+## Known issues
+- [Issue + workaround or status]
+
+## Architecture notes
+- [Key patterns, constraints, non-obvious choices]
+
+## Off-limits
+- [Code or systems not to touch without asking]
 ```
 
-Copilot discovers it automatically. No registration needed.
+Update it when decisions change. Reference it in Copilot prompts: *"Check CONTEXT.md for current sprint goals."*
 
-### Grow into agentic workflows
-Future additions (coming as this repo evolves):
-- `/review` slash command — fans out to all three agents in parallel
-- `/ship` command — runs review + tests + security audit before merge
-- GitHub Actions for automated Copilot review on every PR
+---
+
+## 5-Minute Setup
+
+### Prerequisites
+- GitHub Copilot subscription (Individual, Business, or Enterprise)
+- VS Code + [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
+- GitHub Copilot Chat extension
+
+### Step 1 — Use this template
+
+Click **Use this template** → **Create a new repository** → name it → create.
+
+### Step 2 — Verify it's working
+
+Open Copilot Chat (`Cmd+Alt+I` on Mac, `Ctrl+Alt+I` on Windows). Ask:
+
+```
+What are the coding standards for this project?
+```
+
+Copilot should describe testing, review, and security rules. If it does — you're done.
+
+### Step 3 — (Optional) Enable MCP servers
+
+For live documentation lookup and GitHub PR context:
+
+1. Add `GITHUB_PERSONAL_ACCESS_TOKEN` to your environment (read-only scoped: Contents + Pull requests)
+2. Reload VS Code — MCP servers start automatically from `.vscode/mcp.json`
+
+### Step 4 — Try an agent
+
+```
+@spec-writer I want to add user notifications when tasks are assigned.
+```
 
 ---
 
 ## Troubleshooting
 
-**Copilot doesn't seem to know my coding standards**
-- Confirm the file is at `.github/copilot-instructions.md` (exact path)
-- Reload VS Code window: `Cmd+Shift+P` → `Developer: Reload Window`
-- Check Copilot Chat settings: `github.copilot.chat.codeGeneration.useInstructionFiles` must be `true` (it's the default)
+**Copilot doesn't follow the coding standards**
+- Confirm file is at `.github/copilot-instructions.md` (exact path)
+- Reload VS Code: `Cmd+Shift+P` → `Developer: Reload Window`
+- Check: `github.copilot.chat.codeGeneration.useInstructionFiles` = `true`
 
 **Agent `@` mention not working**
-- Agents require Copilot Chat — not just inline Copilot autocomplete
-- Confirm `.github/agents/` files have valid YAML frontmatter (`name` and `description` fields)
-- Try restarting VS Code
+- Requires Copilot Chat — not just inline autocomplete
+- Confirm `.github/agents/` files have valid YAML frontmatter (`name` and `description`)
+- Restart VS Code
 
-**`@code-reviewer` gives generic output**
-- Give it context: `@code-reviewer Review auth/login.ts — focus on the session management changes`
-- Paste the diff directly if it's a small change
+**Chatmode not appearing in selector**
+- Confirm files are in `.github/chatmodes/` with `.chatmode.md` extension
+- Reload VS Code window
+
+**MCP server not connecting**
+- Check `GITHUB_PERSONAL_ACCESS_TOKEN` is set in your shell environment
+- Verify token has `Contents: read` and `Pull requests: read` scopes
+- Check VS Code Output → MCP for error details
+
+---
+
+## Adapting to Your Stack
+
+Append to `copilot-instructions.md`:
+
+```markdown
+## TypeScript
+- Strict mode on — no `any` without justification comment
+- Zod for all external input validation
+
+## Python
+- Type hints on all public functions
+- pytest only — no unittest
+
+## Go
+- Table-driven tests
+- Errors returned, not panicked (except truly unrecoverable)
+```
 
 ---
 
 ## Credit
 
 Agent personas sourced from [Addy Osmani's agent-skills](https://github.com/addyosmani/agent-skills).
-Coding standards derived from Google's SWE practices and OWASP guidelines.
+Coding standards derived from Google SWE practices and OWASP guidelines.
+Companion Claude Code workflow: [claude-workflow](https://github.com/panditAbhis/claude-workflow).
 
 ---
 
-*Template. Use it, fork it, adapt it. The discipline is the point.*
+*17 agents. 3 chatmodes. One template. The discipline is the point.*
